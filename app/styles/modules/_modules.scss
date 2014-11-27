@@ -1,0 +1,65 @@
+//modules
+
+
+//widget module
+.widget {
+	border-radius:5px;
+	box-shadow:0px 0px 3px rgba(0,0,0,.1);
+	overflow:hidden;
+	margin-bottom:20px;
+
+	.row-table {
+		display:table;
+		table-layout:fixed;
+		height:100%;
+		width:100%;
+		margin:0;
+
+		> [class*="col-"] {
+			display:table-cell;
+			float:none;
+			table-layout:fixed;
+			vertical-align: middle;
+			padding-top:15px;
+			padding-bottom:15px;
+		}
+
+	}
+
+	em {color:$white;}
+
+	.widget-data {
+		> h2 {color:$white;}
+		> h3 {color:$white; font-size:1.2em;}
+	}
+
+	&.widget-default {
+		background:$white;
+
+		.widget-data > h2, .widget-data > h3 {color:$text-gray}
+
+	}
+	&.widget-green {
+		background:$vic-green;
+	}
+	&.widget-yellow {
+		background:$yellow;
+	}
+	&.widget-red {
+		background:$red;
+	}
+	
+	.widget-darker {
+		background:rgba(0,0,0,.3);
+	}
+}
+
+
+//Status module
+.status-module {
+	p {
+		text-align:center;
+		font-size:3.5em;
+
+	}
+}

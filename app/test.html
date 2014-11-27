@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Import&bull;io Example</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<!-- 1. Include the client library -->
+  <script src="https://cdn.import.io/js/2.0.0/importio.js"></script>
+
+<!-- 2. Configure the library -->
+  <script type="text/javascript">
+
+  $(document).ready(function(){
+
+    importio.init({
+      "auth": {
+        "userGuid": "5d43f67e-5f34-4f00-9341-204a2d7c1fc4",
+        "apiKey": "7GNyLXZr3WzVGshcARcILdZvZOTQNE6VBuIFziH4AtK24CSV9+XRTz0QXbQyZBtOma+OinI8Uw+9LCJdZJ011A=="
+      },
+      "host": "import.io"
+    });
+
+    // Data and done callbacks
+    var dataCallback = function(data) {
+      console.log("Data received", data);
+      //for (var i = 0; i < data.length; i++) {
+	    //var d = data[i];
+		//for (var k in d.data) {
+		  //document.write("<i>" + k + "</i>: " + d.data[k] + "<br />");
+		//}
+		//document.write("<hr>");
+	  //}
+    var textItem = data[0].data.status;
+    var textItem2 = data[0].data.points_record;
+    alert(textItem + ',' + ' ' + textItem2);
+
+    $('#1').html(textItem);
+
+    }
+    var doneCallback = function(data) {
+      console.log("Done, all data:", data);
+      //document.write("<b>Done</b><hr>");
+    }
+
+// 3. Do the query (when the function is called)
+    var doQuery = function() {
+      // Query for tile stars-status
+      importio.query({
+        "connectorGuids": [
+          "c26cd2f9-5b7f-47f3-bb53-2dbfbe48adf5"
+        ],
+        "input": {
+          "webpage/url": "http://www.sportsclubstats.com/NHL/Western/Central/Dallas.html"
+        }
+      }, { "data": dataCallback, "done": doneCallback });
+    }
+
+    $(document).onLoad(doQuery());
+
+});
+
+  </script>
+  <body>
+    <p id="1"></p>
+    <p id="2"></p>
+  </body>
+</html>
