@@ -26,17 +26,45 @@ $(document).ready(function(){
     console.log(textItem2);
 
       // get percent data
-      var newPer = textItem.match(/\d\d.\d%/);
+      var newPer = parseFloat(textItem.match(/\d\d.\d%/));
       //alert(newPer);
-      $('#playoffChances').text(newPer);
+      $('#playoffChances').text(newPer + '%');
 
       // get record indicator
       var newRecord = textItem2.match(/\d{1,2}.\d{1,2}-\d{1,2}/);
+      //console.log(newRecord);
       $('#playoffRecord').text(newRecord);
 
+      // calculate points 
       var newPoints = textItem2.match(/\d{1,3}/);
       $('#seasonPoints').text(newPoints);
 
+
+      // Calculate games remaining
+      var gamesLeft = textItem2.match(/\d{1,2}.\d{1,2}-\d{1,2}/);
+      //console.log(gamesLeft[0]);
+      var gamesLeftMath = gamesLeft[0].replace('-', ' ');
+      //console.log(gamesLeftMath);
+      var gamesWin = parseInt(gamesLeftMath.match(/\d{1,2}/)),
+          gamesLoss = parseInt(gamesLeftMath.match(/\d{1,2}/)),
+          gamesTie = parseInt(gamesLeftMath.match(/\d{1,2}$/)),
+          gamesPlayed = gamesWin + gamesLoss + gamesTie,
+          gamesRemaining = 82 - gamesPlayed;
+      $('#gamesPlayed').text(gamesRemaining);
+
+      console.log(newPer);
+      // Calculate status
+      if (newPer < 25.0){
+          $('#Status').text('No, they will be playing golf');
+      } else if (newPer < 50.0){
+        $('#Status').text('No, but if things go right, maybe.');
+      } else if (newPer < 75.0){
+        $('#Status').text('Maybe, Chances are pretty good!');
+      } else if (newPer < 100){
+        $('#Status').text('Start planning watching parties!');
+      } else if (newPer = 100){
+        $('#Status').text('Playoffs Baby!!!');
+      }
 
     };
 
@@ -61,5 +89,6 @@ $(document).ready(function(){
 
     $(document).ready(doQuery());
 
+    alert('bom');
 
 });
