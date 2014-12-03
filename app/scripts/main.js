@@ -1,5 +1,3 @@
-'use strict';
-
 $(document).ready(function(){
 
     importio.init({
@@ -12,28 +10,23 @@ $(document).ready(function(){
 
     // Data and done callbacks
     var dataCallback = function(data) {
-      //console.log("Data received", data);
-      //for (var i = 0; i < data.length; i++) {
-      //var d = data[i];
-    //for (var k in d.data) {
-      //document.write("<i>" + k + "</i>: " + d.data[k] + "<br />");
-    //}
-    //document.write("<hr>");
-    //}
+      //alert("Data received", data);
     var textItem = data[0].data.status;
     var textItem2 = data[0].data.points_record;
     console.log(textItem);
     console.log(textItem2);
 
       // get percent data
-      var newPer = parseFloat(textItem.match(/\d\d.\d%/));
+      var newPer = parseFloat(textItem.match(/\d{1,3}.\d{1,2}%/));
       //alert(newPer);
       $('#playoffChances').text(newPer + '%');
 
       // get record indicator
       var newRecord = textItem2.match(/\d{1,2}.\d{1,2}-\d{1,2}/);
       //console.log(newRecord);
-      $('#playoffRecord').text(newRecord);
+      var newRecordAdj = newRecord[0].replace(' ', '-');
+      $('#playoffRecord').text(newRecordAdj);
+
 
       // calculate points 
       var newPoints = textItem2.match(/\d{1,3}/);
@@ -43,16 +36,18 @@ $(document).ready(function(){
       // Calculate games remaining
       var gamesLeft = textItem2.match(/\d{1,2}.\d{1,2}-\d{1,2}/);
       //console.log(gamesLeft[0]);
-      var gamesLeftMath = gamesLeft[0].replace('-', ' ');
-      //console.log(gamesLeftMath);
-      var gamesWin = parseInt(gamesLeftMath.match(/\d{1,2}/)),
-          gamesLoss = parseInt(gamesLeftMath.match(/\d{1,2}/)),
-          gamesTie = parseInt(gamesLeftMath.match(/\d{1,2}$/)),
-          gamesPlayed = gamesWin + gamesLoss + gamesTie,
-          gamesRemaining = 82 - gamesPlayed;
+      var gamesLeftString = gamesLeft[0].replace('-', ' ');
+      //var gamesLeftString2 = gamesLeftString.replace('- ', ' ');
+      var gamesLeftMath = gamesLeftString.split(' ');
+      var gameWins = parseInt(gamesLeftMath[0]),
+          gameLoss = parseInt(gamesLeftMath[1]),
+          gameOTLoss = parseInt(gamesLeftMath[2]);
+      var gamesPlayed = gameWins + gameLoss + gameOTLoss;
+      var gamesRemaining = 82 - gamesPlayed;
+      
       $('#gamesPlayed').text(gamesRemaining);
 
-      console.log(newPer);
+      //console.log(newPer);
       // Calculate status
       if (newPer < 25.0){
           $('#Status').text('No, they will be playing golf');
@@ -89,6 +84,5 @@ $(document).ready(function(){
 
     $(document).ready(doQuery());
 
-    alert('bom');
 
 });
