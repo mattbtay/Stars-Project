@@ -49,8 +49,11 @@ $(document).ready(function(){
 
       //console.log(newPer);
       // Calculate status
+      var random =  Math.floor((Math.random() * 9));
+      //alert(random);
+      var range1 = ['No, they will be playing golf', 'No, have you seen their goaltending?', 'No, the\'ll just get an early start on 2015 season', 'Fat Chance, bro', 'Nope', 'Pshh :(', 'Keep Dreamin', 'What year do you think this is, 2013?', 'McDavid 2015 Stars MVP!',];
       if (newPer < 25.0){
-          $('#Status').text('No, they will be playing golf');
+          $('#Status').text(range1[random]);
       } else if (newPer < 50.0){
         $('#Status').text('No, but if things go right, maybe.');
       } else if (newPer < 75.0){
